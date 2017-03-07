@@ -91,6 +91,7 @@ public class RobotMap {
 		try {
 			gearPivot = new CANTalon(GEAR_PIVOT);
 			gearRoller = new CANTalon(GEAR_ROLLER);
+			gearPivot.reverseOutput(true);
 		} catch(Exception e) {
 			DriverStation.reportError("Gear Error: " + e.getMessage(), true);
 		}
