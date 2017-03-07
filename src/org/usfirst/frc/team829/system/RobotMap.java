@@ -1,8 +1,11 @@
 package org.usfirst.frc.team829.system;
 
 import com.ctre.CANTalon;
+import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Talon;
 
 public class RobotMap {
@@ -23,6 +26,9 @@ public class RobotMap {
 	
 	// Numerical values for Relays
 	private static final int SHOOTER_LIGHT = 0;
+	
+	// NavX-MXP
+	public static AHRS navx;
 	
 	// Climb
 	public static Talon climbClimbA, climbClimbB;
@@ -46,13 +52,23 @@ public class RobotMap {
 		
 	}
 	
+	public static void navXInit() {
+		
+		try {
+			navx = new AHRS(SPI.Port.kMXP);
+		} catch(Exception e) {
+			DriverStation.reportError("NavX Error: " + e.getMessage(), true);
+		}
+		
+	}
+	
 	public static void climbInit() {
 		
 		try {
 			climbClimbA = new Talon(CLIMB_CLIMB_A);
 			climbClimbB = new Talon(CLIMB_CLIMB_B);
 		} catch(Exception e) {
-			
+			DriverStation.reportError("Climb Error: " + e.getMessage(), true);
 		}
 		
 	}
@@ -65,7 +81,7 @@ public class RobotMap {
 			driveBackRight = new CANTalon(DRIVE_BACK_RIGHT);
 			driveFrontRight = new CANTalon(DRIVE_FRONT_RIGHT);
 		} catch(Exception e) {
-			
+			DriverStation.reportError("Drive Error: " + e.getMessage(), true);
 		}
 		
 	}
@@ -76,7 +92,7 @@ public class RobotMap {
 			gearPivot = new CANTalon(GEAR_PIVOT);
 			gearRoller = new CANTalon(GEAR_ROLLER);
 		} catch(Exception e) {
-			
+			DriverStation.reportError("Gear Error: " + e.getMessage(), true);
 		}
 		
 	}
@@ -88,7 +104,7 @@ public class RobotMap {
 			shooterShooter = new CANTalon(SHOOTER_SHOOTER);
 			shooterLight = new Relay(SHOOTER_LIGHT);
 		} catch(Exception e) {
-			
+			DriverStation.reportError("Shooter Error: " + e.getMessage(), true);
 		}
 		
 	}
