@@ -37,6 +37,7 @@ public class Shooter {
 				value = Relay.Value.kOff;
 			else
 				value = Relay.Value.kForward;
+			lightTime = System.currentTimeMillis();
 		}
 	}
 	
