@@ -14,5 +14,8 @@ public class Variables {
 	public static final double GEAR_ROLLER_RELEASE_SPEED = -0.50;
 	
 	// Shooter
+	public static final double SHOOTER_CENTRIFUGE_SPIN_SPEED = 0.50;
+	public static final double SHOOTER_RUN_SPEED = 9.00;
+	public static final double SHOOTER_SINGULATOR_SPIN_SPEED = 0.50;
 	
 }

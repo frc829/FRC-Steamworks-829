@@ -1,6 +1,7 @@
 package org.usfirst.frc.team829.system;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -23,6 +24,7 @@ public class RobotMap {
 	// Numerical values for Talons
 	private static final int CLIMB_CLIMB_A = 0;
 	private static final int CLIMB_CLIMB_B = 1;
+	private static final int SHOOTER_SINGULATOR = 2;
 	
 	// Numerical values for Relays
 	private static final int SHOOTER_LIGHT = 0;
@@ -41,6 +43,7 @@ public class RobotMap {
 	
 	// Shooter
 	public static CANTalon shooterShooter, shooterCentrifuge;
+	public static Talon shooterSingulator;
 	public static Relay shooterLight;
 	
 	public static void setup() {
@@ -103,7 +106,10 @@ public class RobotMap {
 		try {
 			shooterCentrifuge = new CANTalon(SHOOTER_CENTRIFUGE);
 			shooterShooter = new CANTalon(SHOOTER_SHOOTER);
+			shooterSingulator = new Talon(SHOOTER_SINGULATOR);
 			shooterLight = new Relay(SHOOTER_LIGHT);
+			shooterShooter.changeControlMode(TalonControlMode.Voltage);
+			Shooter.lightTime = System.currentTimeMillis();
 		} catch(Exception e) {
 			DriverStation.reportError("Shooter Error: " + e.getMessage(), true);
 		}
