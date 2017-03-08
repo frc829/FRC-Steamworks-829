@@ -4,6 +4,7 @@ import org.usfirst.frc.team829.controller.LogitechController;
 import org.usfirst.frc.team829.system.Climb;
 import org.usfirst.frc.team829.system.Drive;
 import org.usfirst.frc.team829.system.Gear;
+import org.usfirst.frc.team829.system.NavX;
 import org.usfirst.frc.team829.system.RobotMap;
 import org.usfirst.frc.team829.system.Shooter;
 
@@ -26,6 +27,10 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void teleopPeriodic() {
+		
+		// NavX Update
+		if(NavX.getAngleRotation() >= 360)
+			NavX.resetAngle();
 		
 		// Climb
 		if(driver.getLeftBumper() && driver.getRightBumper())
