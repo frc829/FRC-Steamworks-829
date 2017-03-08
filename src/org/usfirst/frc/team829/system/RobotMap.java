@@ -30,7 +30,7 @@ public class RobotMap {
 	private static final int SHOOTER_LIGHT = 0;
 	
 	// NavX-MXP
-	public static AHRS navx;
+	public static AHRS navX;
 	
 	// Climb
 	public static Talon climbClimbA, climbClimbB;
@@ -58,7 +58,7 @@ public class RobotMap {
 	public static void navXInit() {
 		
 		try {
-			navx = new AHRS(SPI.Port.kMXP);
+			navX = new AHRS(SPI.Port.kMXP);
 		} catch(Exception e) {
 			DriverStation.reportError("NavX Error: " + e.getMessage(), true);
 		}
