@@ -5,7 +5,7 @@ public class NavX {
 	
 	// Get angle of rotation
 	public static double getAngleRotation() {
-		return RobotMap.navX.getAngle();
+		return Math.abs(RobotMap.navX.getAngle());
 	}
 	
 	// Reset angle of rotation
