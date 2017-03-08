@@ -5,8 +5,10 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Talon;
 
 public class RobotMap {
@@ -58,7 +60,7 @@ public class RobotMap {
 	public static void navXInit() {
 		
 		try {
-			navX = new AHRS(SPI.Port.kMXP);
+			navX = new AHRS(SerialPort.Port.kUSB);
 		} catch(Exception e) {
 			DriverStation.reportError("NavX Error: " + e.getMessage(), true);
 		}

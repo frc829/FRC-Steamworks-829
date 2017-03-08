@@ -1,6 +1,8 @@
 package org.usfirst.frc.team829.robot;
 
 import org.usfirst.frc.team829.controller.LogitechController;
+import org.usfirst.frc.team829.logging.DashboardLogging;
+import org.usfirst.frc.team829.logging.FileLogging;
 import org.usfirst.frc.team829.system.Climb;
 import org.usfirst.frc.team829.system.Drive;
 import org.usfirst.frc.team829.system.Gear;
@@ -18,6 +20,7 @@ public class Robot extends IterativeRobot {
 		RobotMap.setup();
 		driver = new LogitechController(0);
 		operator = new LogitechController(1);
+		FileLogging.clear();
 	}
 	
 	public void autonomousInit() {
@@ -28,9 +31,13 @@ public class Robot extends IterativeRobot {
 	
 	public void teleopPeriodic() {
 		
+		// Log
+		DashboardLogging.displayInformation();
+		FileLogging.writeInformation();
+		
 		// NavX Update
-		if(NavX.getAngleRotation() >= 360)
-			NavX.resetAngle();
+		//if(NavX.getAngleRotation() >= 360)
+			//NavX.resetAngle();
 		
 		// Climb
 		if(driver.getLeftBumper() && driver.getRightBumper())
