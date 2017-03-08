@@ -83,6 +83,7 @@ public class RobotMap {
 			driveFrontLeft = new CANTalon(DRIVE_FRONT_LEFT);
 			driveBackRight = new CANTalon(DRIVE_BACK_RIGHT);
 			driveFrontRight = new CANTalon(DRIVE_FRONT_RIGHT);
+			Drive.preciseTime = System.currentTimeMillis();
 		} catch(Exception e) {
 			DriverStation.reportError("Drive Error: " + e.getMessage(), true);
 		}

@@ -6,6 +6,9 @@ public class Variables {
 	public static final double CLIMB_UP_SPEED = 1.00;
 	
 	// Drive
+	public static final double DRIVE_LEFT_MODIFIER = 1.00;
+	public static final double DRIVE_RIGHT_MODIFIER = 1.00;
+	public static final double DRIVE_PRECISE_MODIFIER = 0.50;
 	
 	// Gear
 	public static final double GEAR_PIVOT_UP_SPEED = 0.25;
