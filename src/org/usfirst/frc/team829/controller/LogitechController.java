@@ -16,14 +16,14 @@ public class LogitechController extends Joystick {
 	// Numerical values for buttons
 	private final int A_BUTTON = 1;
 	private final int B_BUTTON = 2;
-	private final int Y_BUTTON = 3;
-	private final int X_BUTTON = 4;
+	private final int Y_BUTTON = 4;
+	private final int X_BUTTON = 3;
 	private final int LEFT_BUMPER = 5;
 	private final int RIGHT_BUMPER = 6;
-	private final int SELECT_BUTTON = 8;
-	private final int START_BUTTON = 9;
-	private final int LEFT_BUTTON = 10;
-	private final int RIGHT_BUTTON = 11;
+	private final int SELECT_BUTTON = 7;
+	private final int START_BUTTON = 8;
+	private final int LEFT_BUTTON = 9;
+	private final int RIGHT_BUTTON = 10;
 	
 	// Create Object
 	public LogitechController(int port) {

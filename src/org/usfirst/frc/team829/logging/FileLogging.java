@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import org.usfirst.frc.team829.system.NavX;
 import org.usfirst.frc.team829.system.RobotMap;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -37,8 +38,8 @@ public class FileLogging {
 				lines.add("Time: " + System.currentTimeMillis());
 				lines.add("Back Left Position: " + RobotMap.driveBackLeft.getEncPosition());
 				lines.add("Back Right Position: " + RobotMap.driveBackRight.getEncPosition());
-				//lines.add("Robot Angle: " + NavX.getAngleRotation());
-				//lines.add("Robot Displacement: " + NavX.getDisplacement("x"));
+				lines.add("Robot Angle: " + NavX.getAngleRotation());
+				lines.add("Robot Displacement: " + NavX.getDisplacement("x"));
 				
 				for(String line: lines) {
 					writer.write(line);

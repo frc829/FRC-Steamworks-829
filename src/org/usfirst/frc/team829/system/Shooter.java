@@ -16,17 +16,17 @@ public class Shooter {
 	}
 	
 	// Set shooter centrifuge speed
-	public static void setShooterCentrifugeSpeed(double speed) {
+	private static void setShooterCentrifugeSpeed(double speed) {
 		RobotMap.shooterCentrifuge.set(speed);
 	}
 	
 	// Set shooter shooter speed
-	public static void setShooterVoltage(double voltage) {
+	private static void setShooterVoltage(double voltage) {
 		RobotMap.shooterShooter.set(voltage);
 	}
 	
 	// Set shooter singulator speed
-	public static void setShooterSingulatorSpeed(double speed) {
+	private static void setShooterSingulatorSpeed(double speed) {
 		RobotMap.shooterSingulator.set(speed);
 	}
 	
@@ -46,14 +46,29 @@ public class Shooter {
 		setShooterCentrifugeSpeed(Variables.SHOOTER_CENTRIFUGE_SPIN_SPEED);
 	}
 	
+	// Stop centrifuge
+	public static void stopCentrifuge() {
+		setShooterCentrifugeSpeed(0);
+	}
+	
 	// Run shooter
 	public static void runShooter() {
 		setShooterVoltage(Variables.SHOOTER_RUN_SPEED);
 	}
 	
+	// Stop shooter
+	public static void stopShooter() {
+		setShooterVoltage(0);
+	}
+	
 	// Spin singulator
 	public static void spinSingulator() {
 		setShooterSingulatorSpeed(Variables.SHOOTER_SINGULATOR_SPIN_SPEED);
+	}
+	
+	// Stop singulator
+	public static void stopSingulator() {
+		setShooterSingulatorSpeed(0);
 	}
 	
 }

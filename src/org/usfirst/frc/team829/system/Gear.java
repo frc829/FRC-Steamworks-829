@@ -6,18 +6,18 @@ import org.usfirst.frc.team829.robot.Variables;
 public class Gear {
 
 	// Set gear pivot motor speed
-	public static void setGearPivotSpeed(double speed) {
+	private static void setGearPivotSpeed(double speed) {
 		RobotMap.gearPivot.set(speed);
 	}
 	
 	// Set gear roller motor speed
-	public static void setGearRollerSpeed(double speed) {
+	private static void setGearRollerSpeed(double speed) {
 		RobotMap.gearRoller.set(speed);
 	}
 	
 	// Get gear pivot current
-	public static double getGearPivotCurrent() {
-		return RobotMap.gearPivot.getOutputCurrent();
+	public static double getGearRollerCurrent() {
+		return RobotMap.gearRoller.getOutputCurrent();
 	}
 	
 	// Pivot up
@@ -30,6 +30,11 @@ public class Gear {
 		setGearPivotSpeed(Variables.GEAR_PIVOT_DOWN_SPEED);
 	}
 	
+	// Stop pivot
+	public static void stopPivot() {
+		setGearPivotSpeed(0);
+	}
+	
 	// Grab gear
 	public static void grabGear() {
 		setGearRollerSpeed(Variables.GEAR_ROLLER_GRAB_SPEED);
@@ -38,6 +43,11 @@ public class Gear {
 	// Release gear
 	public static void releaseGear() {
 		setGearRollerSpeed(Variables.GEAR_ROLLER_RELEASE_SPEED);
+	}
+	
+	// Stop gear
+	public static void stopGear() {
+		setGearRollerSpeed(0);
 	}
 	
 }

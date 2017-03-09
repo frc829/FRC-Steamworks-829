@@ -15,8 +15,8 @@ public class DashboardLogging {
 		SmartDashboard.putNumber("Back Right Position", RobotMap.driveBackRight.getEncPosition());
 		
 		// NavX
-		//SmartDashboard.putNumber("Robot Angle", NavX.getAngleRotation());		
-		//SmartDashboard.putNumber("Robot Displacement", NavX.getDisplacement("x"));
+		SmartDashboard.putNumber("Robot Angle", NavX.getAngleRotation());		
+		SmartDashboard.putNumber("Robot Displacement", NavX.getDisplacement("x"));
 		
 	}
 	

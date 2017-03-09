@@ -36,52 +36,65 @@ public class Robot extends IterativeRobot {
 		FileLogging.writeInformation();
 		
 		// NavX Update
-		//if(NavX.getAngleRotation() >= 360)
-			//NavX.resetAngle();
+		if(NavX.getAngleRotation() >= 360) {
+			NavX.resetAngle();
+		}
 		
 		// Climb
-		if(driver.getLeftBumper() && driver.getRightBumper())
+		if(driver.getLeftBumper() && driver.getRightBumper()) {
 			Climb.climbUp();
-		else
-			Climb.setClimbSpeed(0);
+		} else {
+			Climb.stopClimb();
+		}
 		
 		// Drive
 		Drive.setDriveSpeed(-driver.getAxisValue("lefty"), -driver.getAxisValue("righty"));
 		
-		if(driver.getStartButton())
+		if(driver.getStartButton()) {
 			Drive.togglePrecise();
+		}
 		
 		// Gear
-		if(operator.getStartButton())
+		if(operator.getStartButton()) {
 			Gear.pivotUp();
-		else if(operator.getSelectButton())
+			System.out.println("PIVOTING UP");
+		} else if(operator.getSelectButton()) {
 			Gear.pivotDown();
-		else
-			Gear.setGearPivotSpeed(0);
+			System.out.println("PIVOTING DOWN");
+		} else {
+			Gear.stopPivot();;
+		}
 		
-		if(operator.getAButton())
+		if(operator.getAButton()) {
 			Gear.grabGear();
-		else if(operator.getBButton())
+		} else if(operator.getBButton()) {
 			Gear.releaseGear();
+		} else {
+			Gear.stopGear();
+		}
 		
 		// Shooter
-		if(operator.getLeftBumper() && operator.getRightBumper())
+		if(operator.getLeftBumper() && operator.getRightBumper()) {
 			Shooter.runShooter();
-		else
-			Shooter.setShooterVoltage(0);
+		} else {
+			Shooter.stopShooter();
+		}
 		
-		if(operator.getAxisValue("lefttrigger") == 1 && operator.getAxisValue("righttrigger") == 1)
+		if(operator.getAxisValue("lefttrigger") == 1 && operator.getAxisValue("righttrigger") == 1) {
 			Shooter.spinSingulator();
-		else
-			Shooter.setShooterSingulatorSpeed(0);
+		} else {
+			Shooter.stopSingulator();
+		}
 		
-		if(operator.getXButton())
+		if(operator.getXButton()) {
 			Shooter.spinCentrifuge();
-		else
-			Shooter.setShooterCentrifugeSpeed(0);
+		} else {
+			Shooter.stopCentrifuge();
+		}
 		
-		if(driver.getSelectButton())
+		if(driver.getSelectButton()) {
 			Shooter.toggleShooterLight();
+		}
 		Shooter.updateLight();
 		
 	}

@@ -12,21 +12,21 @@ import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Talon;
 
 public class RobotMap {
-
+	
 	// Numerical values for CAN Talons
 	private static final int DRIVE_BACK_LEFT = 10;
 	private static final int DRIVE_FRONT_LEFT = 11;
 	private static final int DRIVE_BACK_RIGHT = 12;
 	private static final int DRIVE_FRONT_RIGHT = 13;
-	private static final int GEAR_PIVOT = 14;
-	private static final int GEAR_ROLLER = 15;
-	private static final int SHOOTER_SHOOTER = 16;
+	private static final int GEAR_PIVOT = 9;
+	private static final int GEAR_ROLLER = 18;
+	private static final int SHOOTER_SHOOTER = 14;
 	private static final int SHOOTER_CENTRIFUGE = 17;
 	
 	// Numerical values for Talons
-	private static final int CLIMB_CLIMB_A = 0;
-	private static final int CLIMB_CLIMB_B = 1;
-	private static final int SHOOTER_SINGULATOR = 2;
+	private static final int CLIMB_CLIMB_A = 15;
+	private static final int CLIMB_CLIMB_B = 16;
+	private static final int SHOOTER_SINGULATOR = 0;
 	
 	// Numerical values for Relays
 	private static final int SHOOTER_LIGHT = 0;
@@ -35,13 +35,14 @@ public class RobotMap {
 	public static AHRS navX;
 	
 	// Climb
-	public static Talon climbClimbA, climbClimbB;
+	public static CANTalon climbClimbA, climbClimbB;
 	
 	// Drive
 	public static CANTalon driveBackLeft, driveFrontLeft, driveBackRight, driveFrontRight;
 	
 	// Gear
-	public static CANTalon gearPivot, gearRoller;
+	public static Talon gearPivot;
+	public static CANTalon gearRoller;
 	
 	// Shooter
 	public static CANTalon shooterShooter, shooterCentrifuge;
@@ -60,7 +61,7 @@ public class RobotMap {
 	public static void navXInit() {
 		
 		try {
-			navX = new AHRS(SerialPort.Port.kUSB);
+			navX = new AHRS(SerialPort.Port.kMXP, AHRS.SerialDataType.kProcessedData, (byte) 50);
 		} catch(Exception e) {
 			DriverStation.reportError("NavX Error: " + e.getMessage(), true);
 		}
@@ -70,8 +71,8 @@ public class RobotMap {
 	public static void climbInit() {
 		
 		try {
-			climbClimbA = new Talon(CLIMB_CLIMB_A);
-			climbClimbB = new Talon(CLIMB_CLIMB_B);
+			climbClimbA = new CANTalon(CLIMB_CLIMB_A);
+			climbClimbB = new CANTalon(CLIMB_CLIMB_B);
 		} catch(Exception e) {
 			DriverStation.reportError("Climb Error: " + e.getMessage(), true);
 		}
@@ -86,6 +87,7 @@ public class RobotMap {
 			driveBackRight = new CANTalon(DRIVE_BACK_RIGHT);
 			driveFrontRight = new CANTalon(DRIVE_FRONT_RIGHT);
 			Drive.preciseTime = System.currentTimeMillis();
+			driveBackLeft.setInverted(true);
 		} catch(Exception e) {
 			DriverStation.reportError("Drive Error: " + e.getMessage(), true);
 		}
@@ -95,9 +97,8 @@ public class RobotMap {
 	public static void gearInit() {
 		
 		try {
-			gearPivot = new CANTalon(GEAR_PIVOT);
+			gearPivot = new Talon(GEAR_PIVOT);
 			gearRoller = new CANTalon(GEAR_ROLLER);
-			gearPivot.reverseOutput(true);
 		} catch(Exception e) {
 			DriverStation.reportError("Gear Error: " + e.getMessage(), true);
 		}
@@ -109,7 +110,9 @@ public class RobotMap {
 		try {
 			shooterCentrifuge = new CANTalon(SHOOTER_CENTRIFUGE);
 			shooterShooter = new CANTalon(SHOOTER_SHOOTER);
+			shooterShooter.setInverted(true);
 			shooterSingulator = new Talon(SHOOTER_SINGULATOR);
+			shooterSingulator.setInverted(true);
 			shooterLight = new Relay(SHOOTER_LIGHT);
 			shooterShooter.changeControlMode(TalonControlMode.Voltage);
 			Shooter.lightTime = System.currentTimeMillis();
