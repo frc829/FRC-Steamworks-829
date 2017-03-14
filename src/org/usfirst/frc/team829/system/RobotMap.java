@@ -1,13 +1,13 @@
 package org.usfirst.frc.team829.system;
 
+import org.usfirst.frc.team829.vision.WebCam;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Talon;
 
@@ -34,6 +34,9 @@ public class RobotMap {
 	// NavX-MXP
 	public static AHRS navX;
 	
+	// Webcam
+	public static WebCam webCam;
+	
 	// Climb
 	public static CANTalon climbClimbA, climbClimbB;
 	
@@ -52,6 +55,7 @@ public class RobotMap {
 	public static void setup() {
 		
 		navXInit();
+		webCamInit();
 		climbInit();
 		driveInit();
 		gearInit();
@@ -66,6 +70,16 @@ public class RobotMap {
 			navX.zeroYaw();
 		} catch(Exception e) {
 			DriverStation.reportError("NavX Error: " + e.getMessage(), true);
+		}
+		
+	}
+	
+	public static void webCamInit() {
+		
+		try {
+			webCam = new WebCam();
+		} catch(Exception e) {
+			DriverStation.reportError("WebCam Error: " + e.getMessage(), true);
 		}
 		
 	}

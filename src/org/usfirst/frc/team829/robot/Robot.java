@@ -24,6 +24,7 @@ public class Robot extends IterativeRobot {
 		FileLogging.clear();
 		NavX.resetAngle();
 		NavX.resetDisplacement();
+		RobotMap.webCam.startCapture();
 	}
 	
 	public void autonomousInit() {
@@ -116,6 +117,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void disabledInit() {
+		RobotMap.webCam.stopCapture();
 	}
 	
 	// Place a gear
