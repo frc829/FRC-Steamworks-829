@@ -134,20 +134,28 @@ public class Robot extends IterativeRobot {
 				step++;
 				break;
 			case 1:
-				if(System.currentTimeMillis() - startTime >= 1000) {
+				if(System.currentTimeMillis() - startTime >= 500) {
 					startTime = System.currentTimeMillis();
 					step++;
 				} else {
 					Gear.pivotDown();
-					Gear.releaseGear();
+					Gear.grabGear();
 					Drive.setDriveSpeed(-.500, -.500);
 				}
 				break;
 			case 2:
-				step++;
+				if(System.currentTimeMillis() - startTime >= 500) {
+					startTime = System.currentTimeMillis();
+					step++;
+				} else {
+					Gear.stopPivot();
+					Gear.grabGear();
+					Drive.setDriveSpeed(-.500, -.500);
+				}
 				break;
 			case 3:
 				Drive.setDriveSpeed(0.000, 0.000);
+				Gear.stopGear();
 				functionRunning = false;
 				break;
 			}
