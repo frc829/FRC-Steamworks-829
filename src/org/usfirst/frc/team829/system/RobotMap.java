@@ -1,5 +1,6 @@
 package org.usfirst.frc.team829.system;
 
+import org.usfirst.frc.team829.vision.Pixy;
 import org.usfirst.frc.team829.vision.WebCam;
 
 import com.ctre.CANTalon;
@@ -31,6 +32,9 @@ public class RobotMap {
 	// Numerical values for Relays
 	private static final int SHOOTER_LIGHT = 0;
 	
+	// Pixy
+	public static Pixy pixy;
+	
 	// NavX-MXP
 	public static AHRS navX;
 	
@@ -54,12 +58,23 @@ public class RobotMap {
 	
 	public static void setup() {
 		
+		pixyInit();
 		navXInit();
 		webCamInit();
 		climbInit();
 		driveInit();
 		gearInit();
 		shooterInit();
+		
+	}
+	
+	public static void pixyInit() {
+		
+		try {
+			pixy = new Pixy();
+		} catch(Exception e) {
+			DriverStation.reportError("Pixy Error: " + e.getMessage(), true);
+		}
 		
 	}
 	
