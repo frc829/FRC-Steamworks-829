@@ -14,8 +14,8 @@ public class LogitechController extends Joystick {
 	private final int RIGHT_Y_AXIS = 5;
 	
 	// Numerical values for buttons
-	private final int A_BUTTON = 1;
-	private final int B_BUTTON = 2;
+	private final int A_BUTTON = 2;
+	private final int B_BUTTON = 1;
 	private final int Y_BUTTON = 4;
 	private final int X_BUTTON = 3;
 	private final int LEFT_BUMPER = 5;

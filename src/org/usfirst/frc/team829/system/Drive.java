@@ -1,5 +1,6 @@
 package org.usfirst.frc.team829.system;
 
+import org.usfirst.frc.team829.logging.DashboardLogging;
 import org.usfirst.frc.team829.robot.Variables;
 
 // Class that holds Drive functions
@@ -17,7 +18,7 @@ public class Drive {
 	public static void setDriveSpeed(double leftSpeed, double rightSpeed) {
 		
 		double finalLeft = leftSpeed * Variables.DRIVE_LEFT_MODIFIER;
-		double finalRight = rightSpeed * Variables.DRIVE_RIGHT_MODIFIER;
+		double finalRight = -rightSpeed * Variables.DRIVE_RIGHT_MODIFIER;
 		
 		if(precise) {
 			finalLeft *= Variables.DRIVE_PRECISE_MODIFIER;
@@ -54,10 +55,10 @@ public class Drive {
 	// Drive distance
 	public static void driveDistance(double distance, double leftSpeed, double rightSpeed) {
 		boolean going = true;
-		NavX.resetAngle();
-		NavX.resetDisplacement();
+		RobotMap.navX.reset();
+		DashboardLogging.displayInformation();
 		while(going) {
-			if(NavX.getDisplacement("x") < distance)
+			if(Math.abs(NavX.getDisplacement("x")) < distance)
 				setDriveSpeed(leftSpeed, rightSpeed);
 			else
 				going = false;

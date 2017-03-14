@@ -15,18 +15,25 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 public class Robot extends IterativeRobot {
 
 	LogitechController driver, operator;
+	int step = 0;
 	
 	public void robotInit() {
 		RobotMap.setup();
 		driver = new LogitechController(0);
 		operator = new LogitechController(1);
 		FileLogging.clear();
+		NavX.resetAngle();
+		NavX.resetDisplacement();
 	}
 	
 	public void autonomousInit() {
 	}
 	
 	public void autonomousPeriodic() {
+		if(step == 0) {
+			Drive.driveDistance(Variables.UNITS_PER_FEET, .5, .5);
+			step++;
+		}
 	}
 	
 	public void teleopPeriodic() {
@@ -34,6 +41,11 @@ public class Robot extends IterativeRobot {
 		// Log
 		DashboardLogging.displayInformation();
 		FileLogging.writeInformation();
+		
+		// Place Gear
+		if(operator.getRightJoyButton()) {
+			placeGear();
+		}
 		
 		// NavX Update
 		if(NavX.getAngleRotation() >= 360) {
@@ -55,12 +67,10 @@ public class Robot extends IterativeRobot {
 		}
 		
 		// Gear
-		if(operator.getStartButton()) {
+		if(operator.getSelectButton()) {
 			Gear.pivotUp();
-			System.out.println("PIVOTING UP");
-		} else if(operator.getSelectButton()) {
+		} else if(operator.getStartButton()) {
 			Gear.pivotDown();
-			System.out.println("PIVOTING DOWN");
 		} else {
 			Gear.stopPivot();;
 		}
@@ -106,6 +116,41 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void disabledInit() {
+	}
+	
+	// Place a gear
+	public void placeGear() {
+		
+		boolean functionRunning = true;
+		int step = 0;
+		long startTime = System.currentTimeMillis();
+		
+		while(functionRunning) {
+			switch(step) {
+			case 0:
+				startTime = System.currentTimeMillis();
+				step++;
+				break;
+			case 1:
+				if(System.currentTimeMillis() - startTime >= 1000) {
+					startTime = System.currentTimeMillis();
+					step++;
+				} else {
+					Gear.pivotDown();
+					Gear.releaseGear();
+					Drive.setDriveSpeed(-.500, -.500);
+				}
+				break;
+			case 2:
+				step++;
+				break;
+			case 3:
+				Drive.setDriveSpeed(0.000, 0.000);
+				functionRunning = false;
+				break;
+			}
+		}
+		
 	}
 	
 }

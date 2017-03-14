@@ -51,6 +51,7 @@ public class RobotMap {
 	
 	public static void setup() {
 		
+		navXInit();
 		climbInit();
 		driveInit();
 		gearInit();
@@ -61,7 +62,8 @@ public class RobotMap {
 	public static void navXInit() {
 		
 		try {
-			navX = new AHRS(SerialPort.Port.kMXP, AHRS.SerialDataType.kProcessedData, (byte) 50);
+			navX = new AHRS(SerialPort.Port.kUSB);
+			navX.zeroYaw();
 		} catch(Exception e) {
 			DriverStation.reportError("NavX Error: " + e.getMessage(), true);
 		}
@@ -98,6 +100,7 @@ public class RobotMap {
 		
 		try {
 			gearPivot = new Talon(GEAR_PIVOT);
+			gearPivot.setInverted(true);
 			gearRoller = new CANTalon(GEAR_ROLLER);
 		} catch(Exception e) {
 			DriverStation.reportError("Gear Error: " + e.getMessage(), true);
