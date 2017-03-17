@@ -21,7 +21,7 @@ public class Variables {
 	
 	// Shooter
 	public static final double SHOOTER_CENTRIFUGE_SPIN_SPEED = 0.50;
-	public static final double SHOOTER_RUN_SPEED = 9.00;
+	public static final double SHOOTER_RUN_SPEED = 10.00;
 	public static final double SHOOTER_SINGULATOR_SPIN_SPEED = 0.50;
 	
 }

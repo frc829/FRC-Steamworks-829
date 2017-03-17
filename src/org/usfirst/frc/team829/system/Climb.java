@@ -6,7 +6,7 @@ import org.usfirst.frc.team829.robot.Variables;
 public class Climb {
 
 	// Set climb motor speeds
-	private static void setClimbSpeed(double speed) {
+	public static void setClimbSpeed(double speed) {
 		RobotMap.climbClimbA.set(speed);
 		RobotMap.climbClimbB.set(speed);
 	}

@@ -54,11 +54,7 @@ public class Robot extends IterativeRobot {
 		}
 		
 		// Climb
-		if(driver.getLeftBumper() && driver.getRightBumper()) {
-			Climb.climbUp();
-		} else {
-			Climb.stopClimb();
-		}
+		Climb.setClimbSpeed(operator.getAxisValue("lefty"));
 		
 		// Drive
 		Drive.setDriveSpeed(-driver.getAxisValue("lefty"), -driver.getAxisValue("righty"));
@@ -134,7 +130,7 @@ public class Robot extends IterativeRobot {
 				step++;
 				break;
 			case 1:
-				if(System.currentTimeMillis() - startTime >= 500) {
+				if(System.currentTimeMillis() - startTime >= 350) {
 					startTime = System.currentTimeMillis();
 					step++;
 				} else {
@@ -144,7 +140,7 @@ public class Robot extends IterativeRobot {
 				}
 				break;
 			case 2:
-				if(System.currentTimeMillis() - startTime >= 500) {
+				if(System.currentTimeMillis() - startTime >= 250) {
 					startTime = System.currentTimeMillis();
 					step++;
 				} else {
@@ -154,8 +150,17 @@ public class Robot extends IterativeRobot {
 				}
 				break;
 			case 3:
+				if(System.currentTimeMillis() - startTime >= 500) {
+					startTime = System.currentTimeMillis();
+					step++;
+				} else {
+					Gear.pivotUp();
+				}
+				break;
+			case 4:
 				Drive.setDriveSpeed(0.000, 0.000);
 				Gear.stopGear();
+				Gear.stopPivot();
 				functionRunning = false;
 				break;
 			}
