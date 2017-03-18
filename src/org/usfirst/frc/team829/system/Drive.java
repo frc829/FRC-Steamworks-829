@@ -1,6 +1,7 @@
 package org.usfirst.frc.team829.system;
 
 import org.usfirst.frc.team829.logging.DashboardLogging;
+import org.usfirst.frc.team829.robot.Robot;
 import org.usfirst.frc.team829.robot.Variables;
 
 // Class that holds Drive functions
@@ -8,6 +9,7 @@ public class Drive {
 
 	public static boolean precise = true;
 	public static long preciseTime;
+	public static double startLocation, startAngle;
 	
 	public static enum DIRECTION {
 		LEFT,
@@ -52,27 +54,50 @@ public class Drive {
 		}
 	}
 	
+	public static void setStart() {
+		startLocation = NavX.getDisplacement("x");
+		startAngle = NavX.getAngleRotation();
+	}
+	
 	// Drive distance
-	public static void driveDistance(double distance, double leftSpeed, double rightSpeed) {
-		boolean going = true;
-		RobotMap.navX.reset();
+	public static boolean driveDistance(double distance, double leftSpeed, double rightSpeed) {
 		DashboardLogging.displayInformation();
-		while(going) {
-			if(Math.abs(NavX.getDisplacement("x")) < distance)
-				setDriveSpeed(leftSpeed, rightSpeed);
-			else
-				going = false;
+		if(Math.abs(NavX.getDisplacement("x") - startLocation) >= distance) {
+			return true;
+		}
+		else {
+			System.out.println("Driving");
+			System.out.println("Distance: " + (Math.abs(NavX.getDisplacement("x") - startLocation) * Variables.UNITS_PER_FEET + "ft"));
+			setDriveSpeed(adjustDrive(leftSpeed, rightSpeed)[0], adjustDrive(leftSpeed, rightSpeed)[1]);
+			return false;
 		}
 	}
 	
+	public static void driveStraight(double leftSpeed, double rightSpeed) {
+		setDriveSpeed(adjustDrive(leftSpeed, rightSpeed)[0], adjustDrive(leftSpeed, rightSpeed)[1]);
+	}
+	
+	// Drive straight
+	public static double[] adjustDrive(double leftSpeed, double rightSpeed) {
+		double[] ans = new double[2];
+		ans[0] = leftSpeed;
+		ans[1] = rightSpeed;
+		if(NavX.getAngleRotation() < Robot.START_ANGLE) {
+			ans[0] *= 1.20;
+		} else if(NavX.getAngleRotation() > Robot.START_ANGLE) {
+			ans[1] *= 1.20;
+		}
+		return ans;
+	}
+	
 	// Drive to angle
-	public static void driveToAngle(double angle, DIRECTION direction) {
-		boolean going = true;
-		while(going) {
-			if(NavX.getAngleRotation() <= angle)
-				setDriveSpeed((direction == DIRECTION.LEFT) ? .5 : -.5, (direction == DIRECTION.RIGHT) ? -.5 : .5);
-			else
-				going = false;
+	public static boolean driveToAngle(double angle, DIRECTION direction) {
+		if(Math.abs(NavX.getAngleRotation() - Robot.START_ANGLE) <= angle) {
+			setDriveSpeed((direction == DIRECTION.RIGHT) ? .5 : -.5, (direction == DIRECTION.LEFT) ? .5 : -.5);
+			return false;
+		}
+		else {
+			return true;
 		}
 	}
 	

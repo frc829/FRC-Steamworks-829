@@ -3,7 +3,7 @@ package org.usfirst.frc.team829.robot;
 public class Variables {
 
 	// Distance Variables
-	public static final double UNITS_PER_FEET = 0.12851028442;
+	public static final double UNITS_PER_FEET = 0.010434069;
 	
 	// Climb
 	public static final double CLIMB_UP_SPEED = 1.00;

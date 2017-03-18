@@ -81,7 +81,7 @@ public class RobotMap {
 	public static void navXInit() {
 		
 		try {
-			navX = new AHRS(SerialPort.Port.kMXP);
+			navX = new AHRS(SerialPort.Port.kUSB);
 			navX.zeroYaw();
 		} catch(Exception e) {
 			DriverStation.reportError("NavX Error: " + e.getMessage(), true);

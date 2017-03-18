@@ -1,5 +1,10 @@
 package org.usfirst.frc.team829.robot;
 
+import org.usfirst.frc.team829.autonomous.Auto;
+import org.usfirst.frc.team829.autonomous.CenterGearAuto;
+import org.usfirst.frc.team829.autonomous.DoNothingAuto;
+import org.usfirst.frc.team829.autonomous.ShootAuto;
+import org.usfirst.frc.team829.autonomous.SideGearAuto;
 import org.usfirst.frc.team829.controller.LogitechController;
 import org.usfirst.frc.team829.logging.DashboardLogging;
 import org.usfirst.frc.team829.logging.FileLogging;
@@ -10,12 +15,17 @@ import org.usfirst.frc.team829.system.NavX;
 import org.usfirst.frc.team829.system.RobotMap;
 import org.usfirst.frc.team829.system.Shooter;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
 	LogitechController driver, operator;
 	int step = 0;
+	SendableChooser<Auto> autoChooser = new SendableChooser<Auto>();
+	public static double START_ANGLE;
 	
 	public void robotInit() {
 		RobotMap.setup();
@@ -25,16 +35,35 @@ public class Robot extends IterativeRobot {
 		NavX.resetAngle();
 		NavX.resetDisplacement();
 		RobotMap.webCam.startCapture();
+		DashboardLogging.displayInformation();
+		addAutos();
+		RobotMap.navX.reset();
+		RobotMap.navX.zeroYaw();
+		RobotMap.navX.resetDisplacement();
+		START_ANGLE = NavX.getAngleRotation();
+	}
+	
+	public void addAutos() {
+		autoChooser.addDefault("Place Center Gear", new CenterGearAuto());
+		autoChooser.addObject("Shoot Blue", new ShootAuto(Alliance.Blue));
+		autoChooser.addObject("Shoot Red", new ShootAuto(Alliance.Red));
+		autoChooser.addObject("Place Side Gear", new SideGearAuto());
+		autoChooser.addObject("Do Nothing", new DoNothingAuto());
+		SmartDashboard.putData("Auto Chooser", autoChooser);
 	}
 	
 	public void autonomousInit() {
+		SmartDashboard.putData("Auto Chooser", autoChooser);
+		DashboardLogging.displayInformation();
+		RobotMap.navX.reset();
+		RobotMap.navX.zeroYaw();
+		RobotMap.navX.resetDisplacement();
 	}
 	
 	public void autonomousPeriodic() {
-		if(step == 0) {
-			Drive.driveDistance(Variables.UNITS_PER_FEET, .5, .5);
-			step++;
-		}
+		SmartDashboard.putData("Auto Chooser", autoChooser);
+		DashboardLogging.displayInformation();
+		autoChooser.getSelected().execute();
 	}
 	
 	public void teleopPeriodic() {
@@ -49,12 +78,12 @@ public class Robot extends IterativeRobot {
 		}
 		
 		// NavX Update
-		if(NavX.getAngleRotation() >= 360) {
+		/*if(NavX.getAngleRotation() >= 360) {
 			NavX.resetAngle();
-		}
+		}*/
 		
 		// Climb
-		Climb.setClimbSpeed(operator.getAxisValue("lefty"));
+		Climb.setClimbSpeed(Math.abs(operator.getAxisValue("lefty")));
 		
 		// Drive
 		Drive.setDriveSpeed(-driver.getAxisValue("lefty"), -driver.getAxisValue("righty"));
@@ -117,7 +146,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	// Place a gear
-	public void placeGear() {
+	public static void placeGear() {
 		
 		boolean functionRunning = true;
 		int step = 0;
@@ -136,7 +165,7 @@ public class Robot extends IterativeRobot {
 				} else {
 					Gear.pivotDown();
 					Gear.grabGear();
-					Drive.setDriveSpeed(-.500, -.500);
+					Drive.setDriveSpeed(-.350, -.350);
 				}
 				break;
 			case 2:
@@ -146,7 +175,7 @@ public class Robot extends IterativeRobot {
 				} else {
 					Gear.stopPivot();
 					Gear.grabGear();
-					Drive.setDriveSpeed(-.500, -.500);
+					Drive.setDriveSpeed(-.350, -.350);
 				}
 				break;
 			case 3:

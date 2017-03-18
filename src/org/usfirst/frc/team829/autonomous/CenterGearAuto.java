@@ -1,0 +1,48 @@
+package org.usfirst.frc.team829.autonomous;
+
+import org.usfirst.frc.team829.robot.Robot;
+import org.usfirst.frc.team829.robot.Variables;
+import org.usfirst.frc.team829.system.Drive;
+import org.usfirst.frc.team829.system.Gear;
+
+public class CenterGearAuto extends Auto {
+
+	long startTime;
+	
+	public CenterGearAuto() {
+		super("Place Center Gear");
+	}
+	
+	public void execute() {
+		
+		System.out.println(name);
+		double dist = Variables.UNITS_PER_FEET * 6;
+		
+		switch(step) {
+		case 0:
+			Drive.precise = false;
+			Drive.setStart();
+			startTime = System.currentTimeMillis();
+			nextStep();
+			break;
+		case 1:
+			/*if(Drive.driveDistance(dist, .25, .25) ){
+				nextStep();
+			} else */if(System.currentTimeMillis() - startTime >= 6000) {
+				nextStep();
+			} else {
+				Drive.driveStraight(.25, .25);
+				Gear.stopPivot();
+			}
+			break;
+		case 2:
+			Drive.setDriveSpeed(0, 0);
+			System.out.println("At position");
+			Robot.placeGear();
+			nextStep();
+			break;
+		}
+		
+	}
+	
+}

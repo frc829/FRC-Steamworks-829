@@ -6,7 +6,7 @@ import org.usfirst.frc.team829.robot.Variables;
 public class Gear {
 
 	// Set gear pivot motor speed
-	private static void setGearPivotSpeed(double speed) {
+	public static void setGearPivotSpeed(double speed) {
 		RobotMap.gearPivot.set(speed);
 	}
 	
@@ -32,7 +32,7 @@ public class Gear {
 	
 	// Stop pivot
 	public static void stopPivot() {
-		setGearPivotSpeed(0);
+		setGearPivotSpeed(.10);
 	}
 	
 	// Grab gear

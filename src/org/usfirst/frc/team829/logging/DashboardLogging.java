@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 // Class that holds Dashboard functions
 public class DashboardLogging {
-
+	
 	public static void displayInformation() {
 		
 		// Drive
