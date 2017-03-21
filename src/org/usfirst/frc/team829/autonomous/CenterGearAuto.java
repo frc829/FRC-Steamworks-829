@@ -28,7 +28,7 @@ public class CenterGearAuto extends Auto {
 		case 1:
 			/*if(Drive.driveDistance(dist, .25, .25) ){
 				nextStep();
-			} else */if(System.currentTimeMillis() - startTime >= 6000) {
+			} else */if(System.currentTimeMillis() - startTime >= 3000) {
 				nextStep();
 			} else {
 				Drive.driveStraight(.25, .25);

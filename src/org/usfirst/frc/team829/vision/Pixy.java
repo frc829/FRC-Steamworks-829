@@ -1,5 +1,7 @@
 package org.usfirst.frc.team829.vision;
 
+import java.awt.Rectangle;
+
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 
@@ -77,6 +79,10 @@ public class Pixy {
 		
 		public int getHeight() {
 			return height;
+		}
+		
+		public Rectangle getRect() {
+			return new Rectangle(getX(), getY(), getWidth(), getHeight());
 		}
 		
 	}

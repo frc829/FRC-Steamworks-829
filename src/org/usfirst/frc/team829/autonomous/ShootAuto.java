@@ -23,8 +23,10 @@ public class ShootAuto extends Auto {
 		System.out.println(name);
 		double dist = Variables.UNITS_PER_FEET;
 		
+		System.out.println("Step: " + step);
 		switch(step) {
 		case 0:
+			System.out.println("Drive straight");
 			Drive.precise = false;
 			if(!calibrate) {
 				Drive.setStart();
@@ -32,46 +34,54 @@ public class ShootAuto extends Auto {
 				startTime = System.currentTimeMillis();
 			}
 			if(System.currentTimeMillis() - startTime >= 2829) {
-				nextStep();
 				startTime = System.currentTimeMillis();
+				nextStep();
 			} else {
 				Drive.driveStraight(.25, .25);
 			}
 			break;
 		case 1:
-			if(Drive.driveToAngle(90, (alliance.toString().equalsIgnoreCase("blue") ? DIRECTION.RIGHT : DIRECTION.LEFT))) {
-				nextStep();
+			System.out.println("Turn to hit hopper");
+			if(Drive.driveToAngle(80, (alliance.toString().equalsIgnoreCase("blue") ? DIRECTION.RIGHT : DIRECTION.LEFT))) {
 				startTime = System.currentTimeMillis();
 				Drive.setStart();
+				nextStep();
 			}
 			break;
 		case 2:
-			if(System.currentTimeMillis() - startTime >= 500) {
-				nextStep();
+			System.out.println("Drive straight");
+			if(System.currentTimeMillis() - startTime >= 1000) {
 				startTime = System.currentTimeMillis();
+				nextStep();
 			} else {
 				Drive.driveStraight(.25, .25);
 			}
 			break;
 		case 3:
+			System.out.println("Stop and start shooter");
 			if(System.currentTimeMillis() - startTime >= 750) {
-				nextStep();
 				startTime = System.currentTimeMillis();
+				Drive.setStart();
+				nextStep();
 			} else {
 				Drive.setDriveSpeed(0, 0);
 				Shooter.runShooter();
 			}
 			break;
 		case 4:
-			if(Drive.driveToAngle(120, (alliance.toString().equalsIgnoreCase("blue") ? DIRECTION.LEFT : DIRECTION.RIGHT))) {
-				nextStep();
+			System.out.println("Turn to shoot");
+			if(Drive.driveToAngle(30, (alliance.toString().equalsIgnoreCase("blue") ? DIRECTION.LEFT : DIRECTION.RIGHT))) {
 				startTime = System.currentTimeMillis();
+				nextStep();
 			}
 			break;
 		case 5:
+			System.out.println("Shoot");
 			if(System.currentTimeMillis() - startTime >= 4000) {
+				startTime = System.currentTimeMillis();
 				nextStep();
 			} else {
+				Drive.setDriveSpeed(0, 0);
 				Shooter.runShooter();
 				Shooter.spinCentrifuge();
 				Shooter.spinSingulator();

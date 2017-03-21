@@ -14,21 +14,26 @@ import org.usfirst.frc.team829.system.Gear;
 import org.usfirst.frc.team829.system.NavX;
 import org.usfirst.frc.team829.system.RobotMap;
 import org.usfirst.frc.team829.system.Shooter;
+import org.usfirst.frc.team829.vision.Pixy;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
 	LogitechController driver, operator;
+	NetworkTable t;
+	Pixy pixy;
 	int step = 0;
 	SendableChooser<Auto> autoChooser = new SendableChooser<Auto>();
 	public static double START_ANGLE;
 	
 	public void robotInit() {
 		RobotMap.setup();
+		t = NetworkTable.getTable("main");
 		driver = new LogitechController(0);
 		operator = new LogitechController(1);
 		FileLogging.clear();
@@ -41,13 +46,15 @@ public class Robot extends IterativeRobot {
 		RobotMap.navX.zeroYaw();
 		RobotMap.navX.resetDisplacement();
 		START_ANGLE = NavX.getAngleRotation();
+		pixy = new Pixy();
 	}
 	
 	public void addAutos() {
 		autoChooser.addDefault("Place Center Gear", new CenterGearAuto());
 		autoChooser.addObject("Shoot Blue", new ShootAuto(Alliance.Blue));
 		autoChooser.addObject("Shoot Red", new ShootAuto(Alliance.Red));
-		autoChooser.addObject("Place Side Gear", new SideGearAuto());
+		autoChooser.addObject("Place Side Gear", new SideGearAuto(Alliance.Blue));
+		autoChooser.addObject("Place Side Gear", new SideGearAuto(Alliance.Red));
 		autoChooser.addObject("Do Nothing", new DoNothingAuto());
 		SmartDashboard.putData("Auto Chooser", autoChooser);
 	}
@@ -68,6 +75,8 @@ public class Robot extends IterativeRobot {
 	
 	public void teleopPeriodic() {
 		
+		System.out.println(pixy.getPacket().getRect().toString());
+		
 		// Log
 		DashboardLogging.displayInformation();
 		FileLogging.writeInformation();
@@ -86,7 +95,8 @@ public class Robot extends IterativeRobot {
 		Climb.setClimbSpeed(Math.abs(operator.getAxisValue("lefty")));
 		
 		// Drive
-		Drive.setDriveSpeed(-driver.getAxisValue("lefty"), -driver.getAxisValue("righty"));
+		double left = -driver.getAxisValue("lefty"), right = -driver.getAxisValue("righty");
+		Drive.setDriveSpeed(left, right);
 		
 		if(driver.getStartButton()) {
 			Drive.togglePrecise();
@@ -143,6 +153,12 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledInit() {
 		RobotMap.webCam.stopCapture();
+	}
+	
+	// Check if values in range
+	public static boolean inRange(double a, double b) {
+		double tolerance = 0.05;
+		return a - tolerance <= b && a + tolerance >= b;
 	}
 	
 	// Place a gear

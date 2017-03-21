@@ -27,7 +27,7 @@ public class Drive {
 			finalRight *= Variables.DRIVE_PRECISE_MODIFIER;
 		}
 		
-		RobotMap.driveBackLeft.set(finalLeft);
+		RobotMap.driveBackLeft.set(-finalLeft);
 		RobotMap.driveFrontLeft.set(finalLeft);
 		RobotMap.driveBackRight.set(finalRight);
 		RobotMap.driveFrontRight.set(finalRight);
@@ -83,9 +83,9 @@ public class Drive {
 		ans[0] = leftSpeed;
 		ans[1] = rightSpeed;
 		if(NavX.getAngleRotation() < Robot.START_ANGLE) {
-			ans[0] *= 1.20;
+			ans[0] *= 1.25;
 		} else if(NavX.getAngleRotation() > Robot.START_ANGLE) {
-			ans[1] *= 1.20;
+			ans[1] *= 1.25;
 		}
 		return ans;
 	}

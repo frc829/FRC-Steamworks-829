@@ -22,11 +22,13 @@ public class Gear {
 	
 	// Pivot up
 	public static void pivotUp() {
+		System.out.println("Going up");
 		setGearPivotSpeed(Variables.GEAR_PIVOT_UP_SPEED);
 	}
 	
 	// Pivot down
 	public static void pivotDown() {
+		System.out.println("Going down");
 		setGearPivotSpeed(Variables.GEAR_PIVOT_DOWN_SPEED);
 	}
 	

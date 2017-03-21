@@ -19,8 +19,8 @@ public class RobotMap {
 	private static final int DRIVE_FRONT_LEFT = 11;
 	private static final int DRIVE_BACK_RIGHT = 12;
 	private static final int DRIVE_FRONT_RIGHT = 13;
-	private static final int GEAR_PIVOT = 15;
-	private static final int GEAR_ROLLER = 18;
+	private static final int GEAR_PIVOT = 16;
+	private static final int GEAR_ROLLER = 15;
 	private static final int SHOOTER_SHOOTER = 14;
 	private static final int SHOOTER_CENTRIFUGE = 17;
 	
@@ -31,9 +31,6 @@ public class RobotMap {
 	
 	// Numerical values for Relays
 	private static final int SHOOTER_LIGHT = 0;
-	
-	// Pixy
-	public static Pixy pixy;
 	
 	// NavX-MXP
 	public static AHRS navX;
@@ -57,23 +54,12 @@ public class RobotMap {
 	
 	public static void setup() {
 		
-		pixyInit();
 		navXInit();
 		webCamInit();
 		climbInit();
 		driveInit();
 		gearInit();
 		shooterInit();
-		
-	}
-	
-	public static void pixyInit() {
-		
-		try {
-			pixy = new Pixy();
-		} catch(Exception e) {
-			DriverStation.reportError("Pixy Error: " + e.getMessage(), true);
-		}
 		
 	}
 	
