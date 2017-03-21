@@ -19,14 +19,14 @@ public class RobotMap {
 	private static final int DRIVE_FRONT_LEFT = 11;
 	private static final int DRIVE_BACK_RIGHT = 12;
 	private static final int DRIVE_FRONT_RIGHT = 13;
-	private static final int GEAR_PIVOT = 9;
+	private static final int GEAR_PIVOT = 15;
 	private static final int GEAR_ROLLER = 18;
 	private static final int SHOOTER_SHOOTER = 14;
 	private static final int SHOOTER_CENTRIFUGE = 17;
 	
 	// Numerical values for Talons
-	private static final int CLIMB_CLIMB_A = 15;
-	private static final int CLIMB_CLIMB_B = 16;
+	private static final int CLIMB_CLIMB_A = 1;
+	private static final int CLIMB_CLIMB_B = 2;
 	private static final int SHOOTER_SINGULATOR = 0;
 	
 	// Numerical values for Relays
@@ -42,14 +42,13 @@ public class RobotMap {
 	public static WebCam webCam;
 	
 	// Climb
-	public static CANTalon climbClimbA, climbClimbB;
+	public static Talon climbClimbA, climbClimbB;
 	
 	// Drive
 	public static CANTalon driveBackLeft, driveFrontLeft, driveBackRight, driveFrontRight;
 	
 	// Gear
-	public static Talon gearPivot;
-	public static CANTalon gearRoller;
+	public static CANTalon gearPivot, gearRoller;
 	
 	// Shooter
 	public static CANTalon shooterShooter, shooterCentrifuge;
@@ -102,8 +101,8 @@ public class RobotMap {
 	public static void climbInit() {
 		
 		try {
-			climbClimbA = new CANTalon(CLIMB_CLIMB_A);
-			climbClimbB = new CANTalon(CLIMB_CLIMB_B);
+			climbClimbA = new Talon(CLIMB_CLIMB_A);
+			climbClimbB = new Talon(CLIMB_CLIMB_B);
 		} catch(Exception e) {
 			DriverStation.reportError("Climb Error: " + e.getMessage(), true);
 		}
@@ -128,7 +127,7 @@ public class RobotMap {
 	public static void gearInit() {
 		
 		try {
-			gearPivot = new Talon(GEAR_PIVOT);
+			gearPivot = new CANTalon(GEAR_PIVOT);
 			gearPivot.setInverted(true);
 			gearRoller = new CANTalon(GEAR_ROLLER);
 		} catch(Exception e) {
