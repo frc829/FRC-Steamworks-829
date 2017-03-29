@@ -1,7 +1,6 @@
 package org.usfirst.frc.team829.autonomous;
 
 import org.usfirst.frc.team829.robot.Robot;
-import org.usfirst.frc.team829.robot.Variables;
 import org.usfirst.frc.team829.system.Drive;
 import org.usfirst.frc.team829.system.Gear;
 
@@ -16,11 +15,11 @@ public class CenterGearAuto extends Auto {
 	public void execute() {
 		
 		System.out.println(name);
-		double dist = Variables.UNITS_PER_FEET * 6;
+		//double dist = Variables.UNITS_PER_FEET * 7;
 		
 		switch(step) {
 		case 0:
-			Drive.precise = false;
+			Drive.precise = 2;
 			Drive.setStart();
 			startTime = System.currentTimeMillis();
 			nextStep();

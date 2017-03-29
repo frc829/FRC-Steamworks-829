@@ -11,7 +11,7 @@ public class Gear {
 	}
 	
 	// Set gear roller motor speed
-	private static void setGearRollerSpeed(double speed) {
+	public static void setGearRollerSpeed(double speed) {
 		RobotMap.gearRoller.set(speed);
 	}
 	
@@ -34,7 +34,7 @@ public class Gear {
 	
 	// Stop pivot
 	public static void stopPivot() {
-		setGearPivotSpeed(.10);
+		setGearPivotSpeed(0);
 	}
 	
 	// Grab gear

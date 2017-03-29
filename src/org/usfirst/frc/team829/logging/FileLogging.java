@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import org.usfirst.frc.team829.system.NavX;
 import org.usfirst.frc.team829.system.RobotMap;
 
-import edu.wpi.first.wpilibj.DriverStation;
-
 // Class that holds File functions
 public class FileLogging {
 
@@ -50,7 +48,7 @@ public class FileLogging {
 			writer.close();
 			
 		} catch(Exception e) {
-			DriverStation.reportError("File not working: " + e.getMessage(), true);
+			//DriverStation.reportError("File not working: " + e.getMessage(), true);
 		}
 		
 	}

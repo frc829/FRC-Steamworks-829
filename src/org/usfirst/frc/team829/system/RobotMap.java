@@ -1,6 +1,5 @@
 package org.usfirst.frc.team829.system;
 
-import org.usfirst.frc.team829.vision.Pixy;
 import org.usfirst.frc.team829.vision.WebCam;
 
 import com.ctre.CANTalon;

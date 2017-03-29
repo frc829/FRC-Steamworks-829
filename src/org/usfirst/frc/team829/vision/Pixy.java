@@ -47,6 +47,10 @@ public class Pixy {
 		int xPos = 0, yPos = 0, width = 0, height = 0;
 		
 		public PixyPacket(int xPos, int yPos, int width, int height) {
+			setX(xPos);
+			setY(yPos);
+			setWidth(width);
+			setHeight(height);
 		}
 		
 		public void setX(int xPos) {

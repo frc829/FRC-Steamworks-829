@@ -2,19 +2,16 @@ package org.usfirst.frc.team829.autonomous;
 
 import org.usfirst.frc.team829.robot.Robot;
 import org.usfirst.frc.team829.system.Drive;
-import org.usfirst.frc.team829.system.Drive.DIRECTION;
-
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 public class SideGearAuto extends Auto {
 
-	Alliance alliance;
+	Drive.DIRECTION direction;
 	boolean calibrate = false;
 	long startTime;
 	
-	public SideGearAuto(Alliance alliance) {
-		super("Place Side Gear " + alliance.toString());
-		this.alliance = alliance;
+	public SideGearAuto(Drive.DIRECTION direction) {
+		super("Place Side Gear " + direction.toString().toLowerCase());
+		this.direction = direction;
 	}
 	
 	public void execute() {
@@ -23,27 +20,27 @@ public class SideGearAuto extends Auto {
 		
 		switch(step) {
 		case 0:
-			Drive.precise = false;
+			Drive.precise = 2;
 			if(!calibrate) {
 				Drive.setStart();
 				calibrate = true;
 				startTime = System.currentTimeMillis();
 			}
-			if(System.currentTimeMillis() - startTime >= 1900) {
+			if(System.currentTimeMillis() - startTime >= 2500) {
 				nextStep();
 			} else {
 				Drive.driveStraight(.25, .25);
 			}
 			break;
 		case 1:
-			if(Drive.driveToAngle(30, (alliance.toString().equalsIgnoreCase("blue")) ? DIRECTION.RIGHT : DIRECTION.LEFT)) {
+			if(Drive.driveToAngle(30, direction)) {
 				nextStep();
 				Drive.setStart();
 				startTime = System.currentTimeMillis();
 			}
 			break;
 		case 2:
-			if(System.currentTimeMillis() - startTime >= 1500) {
+			if(System.currentTimeMillis() - startTime >= 2000) {
 				nextStep();
 			} else {
 				Drive.driveStraight(.25, .25);
@@ -52,7 +49,7 @@ public class SideGearAuto extends Auto {
 		case 3:
 			Drive.setDriveSpeed(0, 0);
 			System.out.println("At position");
-			Robot.placeGear();
+			Robot.placeGearAuto();
 			nextStep();
 			break;
 		}

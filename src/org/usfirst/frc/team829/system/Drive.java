@@ -7,7 +7,7 @@ import org.usfirst.frc.team829.robot.Variables;
 // Class that holds Drive functions
 public class Drive {
 
-	public static boolean precise = true;
+	public static int precise = 0;
 	public static long preciseTime;
 	public static double startLocation, startAngle;
 	
@@ -22,9 +22,12 @@ public class Drive {
 		double finalLeft = leftSpeed * Variables.DRIVE_LEFT_MODIFIER;
 		double finalRight = -rightSpeed * Variables.DRIVE_RIGHT_MODIFIER;
 		
-		if(precise) {
+		if(precise == 0) {
 			finalLeft *= Variables.DRIVE_PRECISE_MODIFIER;
 			finalRight *= Variables.DRIVE_PRECISE_MODIFIER;
+		} else if(precise == 1) {
+			finalLeft *= Variables.DRIVE_SORT_OF_PRECISE_MODIFIER;
+			finalRight *= Variables.DRIVE_SORT_OF_PRECISE_MODIFIER;
 		}
 		
 		RobotMap.driveBackLeft.set(-finalLeft);
@@ -37,7 +40,7 @@ public class Drive {
 	// Toggle precise
 	public static void togglePrecise() {
 		if(System.currentTimeMillis() - preciseTime >= 500) {
-			precise = !precise;
+			precise = (precise == 2) ? 0 : precise + 1;
 			preciseTime = System.currentTimeMillis();
 		}
 	}
@@ -94,6 +97,17 @@ public class Drive {
 	public static boolean driveToAngle(double angle, DIRECTION direction) {
 		if(Math.abs(NavX.getAngleRotation() - Robot.START_ANGLE) <= angle) {
 			setDriveSpeed((direction == DIRECTION.RIGHT) ? .5 : -.5, (direction == DIRECTION.LEFT) ? .5 : -.5);
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	
+	// Drive to angle
+	public static boolean driveToAngle(double angle, DIRECTION direction, boolean val) {
+		if(Math.abs(NavX.getAngleRotation() - Robot.START_ANGLE) <= angle) {
+			setDriveSpeed((direction == DIRECTION.RIGHT) ? .25 : -.25, (direction == DIRECTION.LEFT) ? .25 : -.25);
 			return false;
 		}
 		else {
