@@ -7,88 +7,54 @@ import edu.wpi.first.wpilibj.I2C.Port;
 
 public class Pixy {
 
-	I2C mainPixy;
-	
-	public Pixy() {
-		mainPixy = new I2C(Port.kOnboard, 0);
-	}
-	
-	public PixyPacket getPacket() {
-		
-		PixyPacket answer = null;
-		
-		byte[] pixyValues = new byte[64];
-		mainPixy.readOnly(pixyValues, 64);
-		
-		int xPosition = 0, yPosition = 0, width = 0, height = 0;
-		
-		if (pixyValues != null) {
-		    int i = 0;
-		    while (!((pixyValues[i] & 0xff) == 0x55) && (pixyValues[i + 1] & 0xff) == 0xaa && i < 50) { i++; }
-		    i++;
-		    if (i > 50) i = 49;
-		    while (!((pixyValues[i] & 0xff) == 0x55) && (pixyValues[i + 1] & 0xff) == 0xaa && i < 50) { i++; }
-			xPosition = (char) (((pixyValues[i + 7] & 0xff) << 8) | (pixyValues[i + 6] & 0xff));
-			yPosition = (char) (((pixyValues[i + 9] & 0xff) << 8) | (pixyValues[i + 8] & 0xff));
-			width = (char) (((pixyValues[i + 11] & 0xff) << 8) | (pixyValues[i + 10] & 0xff));
-			height = (char) (((pixyValues[i + 13] & 0xff) << 8) | (pixyValues[i + 12] & 0xff));
-		}
-		
-		if(width != 0 && height != 0) {
-			answer = new PixyPacket(xPosition, yPosition, width, height);
-		}
-				
-		return answer;
-		
-	}
+	public I2C pixy;
+	public byte[] values = new byte[64];
 	
 	public class PixyPacket {
 		
-		int xPos = 0, yPos = 0, width = 0, height = 0;
+		public int x, y, width, height;
 		
-		public PixyPacket(int xPos, int yPos, int width, int height) {
-			setX(xPos);
-			setY(yPos);
-			setWidth(width);
-			setHeight(height);
-		}
-		
-		public void setX(int xPos) {
-			this.xPos = xPos;
-		}
-		
-		public int getX() {
-			return xPos;
-		}
-		
-		public void setY(int yPos) {
-			this.yPos = yPos;
-		}
-		
-		public int getY() {
-			return yPos;
-		}
-		
-		public void setWidth(int width) {
+		public PixyPacket(int x, int y, int width, int height) {
+			this.x = x;
+			this.y = y;
 			this.width = width;
-		}
-		
-		public int getWidth() {
-			return width;
-		}
-		
-		public void setHeight(int height) {
 			this.height = height;
 		}
 		
-		public int getHeight() {
-			return height;
-		}
-		
 		public Rectangle getRect() {
-			return new Rectangle(getX(), getY(), getWidth(), getHeight());
+			return new Rectangle(x, y, width, height);
 		}
 		
+	}
+	
+	public Pixy() {
+		pixy = new I2C(Port.kOnboard, 0x54);
+	}
+	
+	public boolean getValues() {
+		return pixy.readOnly(values, 64);
+	}
+	
+	public PixyPacket getPacket() {
+		if(!getValues()) {
+			int i = 0;
+			while(!(((values[i] & 0xff) == 0x55) && ((values[i+1] & 0xff) == 0xaa)) && i < 50) {
+				i++;
+			}
+			i++;
+			if(i > 50) {
+				i = 49;
+			}
+			while(!(((values[i] & 0xff) == 0x55) && ((values[i+1] & 0xff) == 0xaa)) && i < 50) {
+				i++;
+			}
+			int xPos = (char) (((values[i + 7] & 0xff) << 8) | values[i+6] & 0xff);
+			int yPos = (char) (((values[i + 9] & 0xff) << 8) | values[i+8] & 0xff);
+			int width = (char) (((values[i + 11] & 0xff) << 8) | values[i+10] & 0xff);
+			int height = (char) (((values[i + 13] & 0xff) << 8) | values[i+12] & 0xff);
+			return new PixyPacket(xPos, yPos, width, height);
+		}
+		return new PixyPacket(0, 0, 0, 0);
 	}
 	
 }

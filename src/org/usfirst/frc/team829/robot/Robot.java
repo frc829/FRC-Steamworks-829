@@ -32,9 +32,6 @@ public class Robot extends IterativeRobot {
 	// Starting angle
 	public static double START_ANGLE;
 	
-	// Pixy camera
-	Pixy pixy;
-	
 	// Auto Chooser
 	SendableChooser<Auto> autoChooser = new SendableChooser<Auto>();
 	
@@ -64,9 +61,6 @@ public class Robot extends IterativeRobot {
 		
 		// Set starting angle
 		START_ANGLE = RobotMap.navX.getAngle();
-		
-		// Start Pixy
-		pixy = new Pixy();
 		
 	}
 	
@@ -111,15 +105,6 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void teleopPeriodic() {
-		
-		// Display Pixy object
-		try {
-			if(pixy.getPacket().getWidth() != 0 && pixy.getPacket().getHeight() != 0) {
-				System.out.println(pixy.getPacket().getRect().toString());
-			}
-		} catch(Exception e) {
-			
-		}
 		
 		// Log
 		DashboardLogging.displayInformation();
@@ -181,6 +166,8 @@ public class Robot extends IterativeRobot {
 			Shooter.toggleShooterLight();
 		}
 		Shooter.updateLight();
+		
+		if(driver.getAButton() && Drive.target()) {}
 		
 	}
 	

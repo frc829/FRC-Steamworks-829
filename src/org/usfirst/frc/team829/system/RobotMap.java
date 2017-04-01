@@ -1,5 +1,6 @@
 package org.usfirst.frc.team829.system;
 
+import org.usfirst.frc.team829.vision.Pixy;
 import org.usfirst.frc.team829.vision.WebCam;
 
 import com.ctre.CANTalon;
@@ -37,6 +38,9 @@ public class RobotMap {
 	// Webcam
 	public static WebCam webCam;
 	
+	// Pixy
+	public static Pixy pixy;
+	
 	// Climb
 	public static Talon climbClimbA, climbClimbB;
 	
@@ -54,6 +58,7 @@ public class RobotMap {
 	public static void setup() {
 		
 		navXInit();
+		pixySetup();
 		webCamInit();
 		climbInit();
 		driveInit();
@@ -69,6 +74,16 @@ public class RobotMap {
 			navX.zeroYaw();
 		} catch(Exception e) {
 			DriverStation.reportError("NavX Error: " + e.getMessage(), true);
+		}
+		
+	}
+	
+	public static void pixySetup() {
+		
+		try {
+			pixy = new Pixy();
+		} catch(Exception e) {
+			DriverStation.reportError("Pixy Error: " + e.getMessage(), true);
 		}
 		
 	}
@@ -98,6 +113,7 @@ public class RobotMap {
 		
 		try {
 			driveBackLeft = new CANTalon(DRIVE_BACK_LEFT);
+			driveBackLeft.setInverted(true);
 			driveFrontLeft = new CANTalon(DRIVE_FRONT_LEFT);
 			driveBackRight = new CANTalon(DRIVE_BACK_RIGHT);
 			driveFrontRight = new CANTalon(DRIVE_FRONT_RIGHT);

@@ -3,6 +3,7 @@ package org.usfirst.frc.team829.system;
 import org.usfirst.frc.team829.logging.DashboardLogging;
 import org.usfirst.frc.team829.robot.Robot;
 import org.usfirst.frc.team829.robot.Variables;
+import org.usfirst.frc.team829.vision.Pixy.PixyPacket;
 
 // Class that holds Drive functions
 public class Drive {
@@ -30,7 +31,7 @@ public class Drive {
 			finalRight *= Variables.DRIVE_SORT_OF_PRECISE_MODIFIER;
 		}
 		
-		RobotMap.driveBackLeft.set(-finalLeft);
+		RobotMap.driveBackLeft.set(finalLeft);
 		RobotMap.driveFrontLeft.set(finalLeft);
 		RobotMap.driveBackRight.set(finalRight);
 		RobotMap.driveFrontRight.set(finalRight);
@@ -42,6 +43,22 @@ public class Drive {
 		if(System.currentTimeMillis() - preciseTime >= 500) {
 			precise = (precise == 2) ? 0 : precise + 1;
 			preciseTime = System.currentTimeMillis();
+		}
+	}
+	
+	public static boolean target() {
+		PixyPacket packet = RobotMap.pixy.getPacket();
+		int centerPoint = packet.x + (packet.width/2);
+		System.out.println("Center Point: " + centerPoint);
+		int dist = 200 - centerPoint;
+		System.out.println("Distance: " + dist);
+		int tolerance = 10;
+		if(Math.abs(dist) > tolerance) {
+			if(dist > 0) { turn(DIRECTION.LEFT, .25); System.out.println("Turning Left"); }
+			if(dist < 0) { turn(DIRECTION.RIGHT, .25); System.out.println("Turning Right"); }
+			return false;
+		} else {
+			return true;
 		}
 	}
 	
@@ -113,6 +130,11 @@ public class Drive {
 		else {
 			return true;
 		}
+	}
+	
+	// Turn
+	public static void turn(DIRECTION direction, double speed) {
+		setDriveSpeed((direction == DIRECTION.RIGHT) ? speed : -speed, (direction == DIRECTION.RIGHT) ? -speed : speed);
 	}
 	
 }

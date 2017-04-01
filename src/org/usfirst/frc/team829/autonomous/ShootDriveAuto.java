@@ -24,56 +24,103 @@ public class ShootDriveAuto extends Auto {
 		
 		long now = System.currentTimeMillis();	
 		
+		System.out.println("Delta Time: " + (now - startTime));
+		
 		switch(step) {
 		case 0:
 			startTime = now;
+			Drive.precise = 2;
 			nextStep();
 			break;
 		case 1:
-			if(now - startTime >= 1000) {
-				startTime = now;
-				nextStep();
-			} else {
-				Shooter.runShooter();
-			}
-			break;
-		case 2:
-			if(now - startTime >= 7000) {
-				startTime = now;
-				nextStep();
-			} else {
-				Shooter.runShooter();
-				Shooter.spinCentrifuge();
-				Shooter.spinSingulator();
-			}
-			break;
-		case 3:
-			Shooter.stopCentrifuge();
-			Shooter.stopShooter();
-			Shooter.stopSingulator();
-			startTime = now;
-			Drive.setStart();
-			Drive.precise = 1;
-			nextStep();
-			break;
-		case 4:
-			if(Drive.driveToAngle(70, direction)) {
+			if(now - startTime >= 2000) {
 				Drive.setStart();
-				startTime = now;
-				Drive.precise = 2;
 				Robot.START_ANGLE = NavX.getAngleRotation();
-				nextStep();
-			}
-			break;
-		case 5:
-			if(now - startTime >= 3500) {
+				Drive.precise = 0;
 				nextStep();
 			} else {
 				Drive.driveStraight(.25, .25);
 			}
 			break;
+		case 2:
+			if(Drive.driveToAngle(85, direction)) {
+				startTime = now;
+				Drive.setStart();
+				Robot.START_ANGLE = NavX.getAngleRotation();
+				Drive.precise = 1;
+				nextStep();
+			}
+			break;
+		case 3:
+			if(now - startTime >= 1000) {
+				startTime = now;
+				nextStep();
+			} else {
+				Drive.driveStraight(.25, .25);
+			}
+			break;
+		case 4:
+			if(now - startTime >= 2000) {
+				startTime = now;
+				nextStep();
+			} else {
+				Drive.setDriveSpeed(0, 0);
+			}
+			break;
+		case 5:
+			if(now - startTime >= 1000) {
+				startTime = now;
+				Drive.setStart();
+				Robot.START_ANGLE = NavX.getAngleRotation();
+				Drive.precise = 2;
+				nextStep();
+			} else {
+				Drive.driveStraight(-.25, -.25);
+			}
+			break;
 		case 6:
-			Drive.setDriveSpeed(0, 0);
+			if(now - startTime >= 1500) {
+				startTime = now;
+				nextStep();
+			} else {
+				System.out.println("Turning");
+				Drive.turn((direction == DIRECTION.RIGHT) ? DIRECTION.LEFT : DIRECTION.RIGHT, .25);
+			}
+			break;
+		case 7:
+			if(now - startTime >= 1000) {
+				startTime = now;
+				nextStep();
+			} else {
+				System.out.println("STOP");
+				Drive.setDriveSpeed(0, 0);
+			}
+			break;
+		case 8:
+			if(Drive.target()) {
+				startTime = now;
+				nextStep();
+			}
+			break;
+		case 9:
+			if(now - startTime >= 500) {
+				startTime = now;
+				nextStep();
+			} else {
+				Drive.setDriveSpeed(0, 0);
+				Shooter.runShooter();
+			}
+			break;
+		case 10:
+			if(startTime - now >= 7000) {
+				Shooter.stopCentrifuge();
+				Shooter.stopShooter();
+				Shooter.stopSingulator();
+			} else {
+				Shooter.runShooter();
+				Shooter.spinCentrifuge();
+				Shooter.spinSingulator();
+			}
 			break;
 		}
 		
