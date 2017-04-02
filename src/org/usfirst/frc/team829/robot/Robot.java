@@ -104,6 +104,12 @@ public class Robot extends IterativeRobot {
 		
 	}
 	
+	public void teleopInit() {
+		Shooter.stopCentrifuge();
+		Shooter.stopShooter();
+		Shooter.stopSingulator();
+	}
+	
 	public void teleopPeriodic() {
 		
 		// Log

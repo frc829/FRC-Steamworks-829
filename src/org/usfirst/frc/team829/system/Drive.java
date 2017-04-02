@@ -31,7 +31,7 @@ public class Drive {
 			finalRight *= Variables.DRIVE_SORT_OF_PRECISE_MODIFIER;
 		}
 		
-		RobotMap.driveBackLeft.set(finalLeft);
+		RobotMap.driveBackLeft.set(-finalLeft);
 		RobotMap.driveFrontLeft.set(finalLeft);
 		RobotMap.driveBackRight.set(finalRight);
 		RobotMap.driveFrontRight.set(finalRight);
@@ -54,8 +54,8 @@ public class Drive {
 		System.out.println("Distance: " + dist);
 		int tolerance = 10;
 		if(Math.abs(dist) > tolerance) {
-			if(dist > 0) { turn(DIRECTION.LEFT, .25); System.out.println("Turning Left"); }
-			if(dist < 0) { turn(DIRECTION.RIGHT, .25); System.out.println("Turning Right"); }
+			if(dist > 0) { turn(DIRECTION.LEFT, .225); System.out.println("Turning Left"); }
+			if(dist < 0) { turn(DIRECTION.RIGHT, .225); System.out.println("Turning Right"); }
 			return false;
 		} else {
 			return true;
@@ -113,7 +113,7 @@ public class Drive {
 	// Drive to angle
 	public static boolean driveToAngle(double angle, DIRECTION direction) {
 		if(Math.abs(NavX.getAngleRotation() - Robot.START_ANGLE) <= angle) {
-			setDriveSpeed((direction == DIRECTION.RIGHT) ? .5 : -.5, (direction == DIRECTION.LEFT) ? .5 : -.5);
+			setDriveSpeed((direction == DIRECTION.RIGHT) ? .65 : -.65, (direction == DIRECTION.LEFT) ? .65 : -.65);
 			return false;
 		}
 		else {

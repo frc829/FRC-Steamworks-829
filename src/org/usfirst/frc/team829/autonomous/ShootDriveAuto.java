@@ -1,6 +1,8 @@
 package org.usfirst.frc.team829.autonomous;
 
 import org.usfirst.frc.team829.robot.Robot;
+import org.usfirst.frc.team829.robot.Variables;
+import org.usfirst.frc.team829.system.Climb;
 import org.usfirst.frc.team829.system.Drive;
 import org.usfirst.frc.team829.system.NavX;
 import org.usfirst.frc.team829.system.Shooter;
@@ -30,10 +32,11 @@ public class ShootDriveAuto extends Auto {
 		case 0:
 			startTime = now;
 			Drive.precise = 2;
+			Shooter.runShooter();
 			nextStep();
 			break;
 		case 1:
-			if(now - startTime >= 2000) {
+			if(now - startTime >= 1500) {
 				Drive.setStart();
 				Robot.START_ANGLE = NavX.getAngleRotation();
 				Drive.precise = 0;
@@ -60,7 +63,7 @@ public class ShootDriveAuto extends Auto {
 			}
 			break;
 		case 4:
-			if(now - startTime >= 2000) {
+			if(now - startTime >= 1000) {
 				startTime = now;
 				nextStep();
 			} else {
@@ -79,12 +82,12 @@ public class ShootDriveAuto extends Auto {
 			}
 			break;
 		case 6:
-			if(now - startTime >= 1500) {
+			if(now - startTime >= 325) {
 				startTime = now;
 				nextStep();
 			} else {
 				System.out.println("Turning");
-				Drive.turn((direction == DIRECTION.RIGHT) ? DIRECTION.LEFT : DIRECTION.RIGHT, .25);
+				Drive.turn((direction == DIRECTION.RIGHT) ? DIRECTION.LEFT : DIRECTION.RIGHT, .75);
 			}
 			break;
 		case 7:
@@ -103,24 +106,11 @@ public class ShootDriveAuto extends Auto {
 			}
 			break;
 		case 9:
-			if(now - startTime >= 500) {
-				startTime = now;
-				nextStep();
-			} else {
-				Drive.setDriveSpeed(0, 0);
-				Shooter.runShooter();
-			}
-			break;
-		case 10:
-			if(startTime - now >= 7000) {
-				Shooter.stopCentrifuge();
-				Shooter.stopShooter();
-				Shooter.stopSingulator();
-			} else {
-				Shooter.runShooter();
-				Shooter.spinCentrifuge();
-				Shooter.spinSingulator();
-			}
+			Drive.setDriveSpeed(0, 0);
+			Shooter.runShooter();
+			Shooter.spinCentrifuge();
+			Shooter.spinSingulator();
+			Climb.setClimbSpeed(-.5);
 			break;
 		}
 		
