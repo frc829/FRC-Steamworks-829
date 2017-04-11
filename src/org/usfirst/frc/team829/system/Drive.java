@@ -62,6 +62,22 @@ public class Drive {
 		}
 	}
 	
+	public static boolean target(boolean val) {
+		PixyPacket packet = RobotMap.pixy.getPacket();
+		int centerPoint = packet.x + (packet.width/2);
+		System.out.println("Center Point: " + centerPoint);
+		int dist = 200 - centerPoint;
+		System.out.println("Distance: " + dist);
+		int tolerance = 10;
+		if(Math.abs(dist) > tolerance) {
+			if(dist > 0) { turn(DIRECTION.RIGHT, .225); System.out.println("Turning Right"); }
+			if(dist < 0) { turn(DIRECTION.LEFT, .225); System.out.println("Turning Left"); }
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	// Drive time
 	public static void driveTime(long time, double leftSpeed, double rightSpeed) {
 		boolean going = true;
@@ -103,9 +119,9 @@ public class Drive {
 		ans[0] = leftSpeed;
 		ans[1] = rightSpeed;
 		if(NavX.getAngleRotation() < Robot.START_ANGLE) {
-			ans[0] *= 1.25;
+			ans[0] *= 1.20;
 		} else if(NavX.getAngleRotation() > Robot.START_ANGLE) {
-			ans[1] *= 1.25;
+			ans[1] *= 1.20;
 		}
 		return ans;
 	}

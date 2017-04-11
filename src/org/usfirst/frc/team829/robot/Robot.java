@@ -6,6 +6,7 @@ import org.usfirst.frc.team829.autonomous.DoNothingAuto;
 import org.usfirst.frc.team829.autonomous.DriveForwardAuto;
 import org.usfirst.frc.team829.autonomous.ShootDriveAuto;
 import org.usfirst.frc.team829.autonomous.ShootGearAuto;
+import org.usfirst.frc.team829.autonomous.ShootTurnDriveAuto;
 import org.usfirst.frc.team829.autonomous.SideGearAuto;
 import org.usfirst.frc.team829.controller.LogitechController;
 import org.usfirst.frc.team829.logging.DashboardLogging;
@@ -16,7 +17,6 @@ import org.usfirst.frc.team829.system.Drive.DIRECTION;
 import org.usfirst.frc.team829.system.Gear;
 import org.usfirst.frc.team829.system.RobotMap;
 import org.usfirst.frc.team829.system.Shooter;
-import org.usfirst.frc.team829.vision.Pixy;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -72,6 +72,8 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Shoot Drive Red", new ShootDriveAuto(Alliance.Red));
 		autoChooser.addObject("Shoot Gear Blue", new ShootGearAuto(Alliance.Blue));
 		autoChooser.addObject("Shoot Gear Red", new ShootGearAuto(Alliance.Red));
+		autoChooser.addObject("Shoot Turn Red", new ShootTurnDriveAuto(Alliance.Red));
+		autoChooser.addObject("Shoot Turn Blue", new ShootTurnDriveAuto(Alliance.Blue));
 		autoChooser.addObject("Place Side Gear Left", new SideGearAuto(DIRECTION.LEFT));
 		autoChooser.addObject("Place Side Gear Right", new SideGearAuto(DIRECTION.RIGHT));
 		autoChooser.addObject("Drive Forward", new DriveForwardAuto());

@@ -1,12 +1,11 @@
 package org.usfirst.frc.team829.autonomous;
 
 import org.usfirst.frc.team829.robot.Robot;
-import org.usfirst.frc.team829.robot.Variables;
 import org.usfirst.frc.team829.system.Climb;
 import org.usfirst.frc.team829.system.Drive;
+import org.usfirst.frc.team829.system.Drive.DIRECTION;
 import org.usfirst.frc.team829.system.NavX;
 import org.usfirst.frc.team829.system.Shooter;
-import org.usfirst.frc.team829.system.Drive.DIRECTION;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
@@ -19,7 +18,7 @@ public class ShootDriveAuto extends Auto {
 	public ShootDriveAuto(Alliance alliance) {
 		super("Shoot Drive");
 		this.alliance = alliance;
-		direction = (alliance.toString().equalsIgnoreCase("red")) ? DIRECTION.RIGHT : DIRECTION.LEFT;
+		direction = (alliance.toString().equalsIgnoreCase("red")) ? DIRECTION.LEFT : DIRECTION.RIGHT;
 	}
 	
 	public void execute() {
@@ -36,7 +35,7 @@ public class ShootDriveAuto extends Auto {
 			nextStep();
 			break;
 		case 1:
-			if(now - startTime >= 1500) {
+			if(now - startTime >= 1750) {
 				Drive.setStart();
 				Robot.START_ANGLE = NavX.getAngleRotation();
 				Drive.precise = 0;
@@ -46,7 +45,7 @@ public class ShootDriveAuto extends Auto {
 			}
 			break;
 		case 2:
-			if(Drive.driveToAngle(85, direction)) {
+			if(Drive.driveToAngle(90, direction)) {
 				startTime = now;
 				Drive.setStart();
 				Robot.START_ANGLE = NavX.getAngleRotation();
@@ -55,11 +54,12 @@ public class ShootDriveAuto extends Auto {
 			}
 			break;
 		case 3:
-			if(now - startTime >= 1000) {
+			// Smack the shit out of the hopper
+			if(now - startTime >= 1500) {
 				startTime = now;
 				nextStep();
 			} else {
-				Drive.driveStraight(.25, .25);
+				Drive.driveStraight(-.65, -.65);
 			}
 			break;
 		case 4:
@@ -78,11 +78,11 @@ public class ShootDriveAuto extends Auto {
 				Drive.precise = 2;
 				nextStep();
 			} else {
-				Drive.driveStraight(-.25, -.25);
+				Drive.driveStraight(.25, .25);
 			}
 			break;
 		case 6:
-			if(now - startTime >= 325) {
+			if(now - startTime >= 400) {
 				startTime = now;
 				nextStep();
 			} else {

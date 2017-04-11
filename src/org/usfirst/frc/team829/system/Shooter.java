@@ -21,7 +21,7 @@ public class Shooter {
 	}
 	
 	// Set shooter shooter speed
-	private static void setShooterVoltage(double voltage) {
+	public static void setShooterVoltage(double voltage) {
 		RobotMap.shooterShooter.set(voltage);
 	}
 	
