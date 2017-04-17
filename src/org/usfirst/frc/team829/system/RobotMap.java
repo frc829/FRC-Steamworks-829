@@ -8,6 +8,7 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Talon;
@@ -31,6 +32,8 @@ public class RobotMap {
 	
 	// Numerical values for Relays
 	private static final int SHOOTER_LIGHT = 0;
+	
+	public static final PowerDistributionPanel pdp = new PowerDistributionPanel(); 
 	
 	// NavX-MXP
 	public static AHRS navX;

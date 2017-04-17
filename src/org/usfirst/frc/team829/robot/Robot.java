@@ -9,8 +9,7 @@ import org.usfirst.frc.team829.autonomous.ShootGearAuto;
 import org.usfirst.frc.team829.autonomous.ShootTurnDriveAuto;
 import org.usfirst.frc.team829.autonomous.SideGearAuto;
 import org.usfirst.frc.team829.controller.LogitechController;
-import org.usfirst.frc.team829.logging.DashboardLogging;
-import org.usfirst.frc.team829.logging.FileLogging;
+import org.usfirst.frc.team829.logging.TableLogging;
 import org.usfirst.frc.team829.system.Climb;
 import org.usfirst.frc.team829.system.Drive;
 import org.usfirst.frc.team829.system.Drive.DIRECTION;
@@ -44,12 +43,8 @@ public class Robot extends IterativeRobot {
 		driver = new LogitechController(0);
 		operator = new LogitechController(1);
 		
-		// Clear file for logging
-		FileLogging.clear();
-		
 		// SmartDashboard
 		RobotMap.webCam.startCapture();
-		DashboardLogging.displayInformation();
 		addAutos();
 		
 		// Reset NavX
@@ -61,6 +56,7 @@ public class Robot extends IterativeRobot {
 		
 		// Set starting angle
 		START_ANGLE = RobotMap.navX.getAngle();
+		TableLogging.log();
 		
 	}
 	
@@ -83,10 +79,10 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void autonomousInit() {
-		
+
+		TableLogging.log();
 		// SmartDashboard
 		SmartDashboard.putData("Auto Chooser", autoChooser);
-		DashboardLogging.displayInformation();
 		
 		// Reset again to be safe
 		RobotMap.navX.reset();
@@ -96,10 +92,10 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void autonomousPeriodic() {
-		
+
+		TableLogging.log();
 		// SmartDashboard
 		SmartDashboard.putData("Auto Chooser", autoChooser);
-		DashboardLogging.displayInformation();
 		
 		// Run selected Auto
 		autoChooser.getSelected().execute();
@@ -114,9 +110,7 @@ public class Robot extends IterativeRobot {
 	
 	public void teleopPeriodic() {
 		
-		// Log
-		DashboardLogging.displayInformation();
-		FileLogging.writeInformation();
+		TableLogging.log();
 		
 		// Place Gear
 		if(operator.getRightJoyButton()) {

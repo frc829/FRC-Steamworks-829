@@ -1,6 +1,5 @@
 package org.usfirst.frc.team829.system;
 
-import org.usfirst.frc.team829.logging.DashboardLogging;
 import org.usfirst.frc.team829.robot.Robot;
 import org.usfirst.frc.team829.robot.Variables;
 import org.usfirst.frc.team829.vision.Pixy.PixyPacket;
@@ -97,7 +96,6 @@ public class Drive {
 	
 	// Drive distance
 	public static boolean driveDistance(double distance, double leftSpeed, double rightSpeed) {
-		DashboardLogging.displayInformation();
 		if(Math.abs(NavX.getDisplacement("x") - startLocation) >= distance) {
 			return true;
 		}
