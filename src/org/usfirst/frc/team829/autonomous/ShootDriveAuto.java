@@ -54,7 +54,6 @@ public class ShootDriveAuto extends Auto {
 			}
 			break;
 		case 3:
-			// Smack the shit out of the hopper
 			if(now - startTime >= 1500) {
 				startTime = now;
 				nextStep();
